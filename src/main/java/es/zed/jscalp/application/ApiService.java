@@ -33,17 +33,17 @@ public class ApiService implements AppInputPort {
   }
 
   @Override
-  public RespModel<OrderResponseDto> justOrder(Object body, HttpMethod method) {
+  public RespModel<OrderResponseDto> justOrder(final Object body, final HttpMethod method) {
     return MethodUtils.buildResponse(appOutputPort.doCallJustOrder(body, method));
   }
 
   @Override
-  public RespModel<List<OrdersResponseDto>> getAllOrders(AllOrderRequestDto body) {
+  public RespModel<List<OrdersResponseDto>> getAllOrders(final AllOrderRequestDto body) {
     return MethodUtils.buildResponse(appOutputPort.doCallGetAllOrders(body));
   }
 
   @Override
-  public RespModel<List<OrdersResponseDto>> justOpenOrders(OpenOrdersRequestDto body, final HttpMethod method) {
+  public RespModel<List<OrdersResponseDto>> justOpenOrders(final OpenOrdersRequestDto body, final HttpMethod method) {
     return MethodUtils.buildResponse(appOutputPort.doCallOpenOrders(body, method));
   }
 
@@ -53,7 +53,7 @@ public class ApiService implements AppInputPort {
   }
 
   @Override
-  public RespModel<List<TradeResponseDto>> getMyTrades(TradeRequestDto body) {
+  public RespModel<List<TradeResponseDto>> getMyTrades(final TradeRequestDto body) {
     return MethodUtils.buildResponse(appOutputPort.doCallGetMyTrades(body));
   }
 }
