@@ -66,8 +66,8 @@ public class ApiEndpoint extends AbstractEndpoint implements AppOutputPort {
 
   public DepthDto doCallGetDepth(final DepthRequestDto body) {
     Map<String, Object> params = new HashMap<>();
-    params.put("symbol", body.getSymbol());
-    params.put("limit", body.getLimit());
+    params.put(Constants.PARAM_SYMBOL, body.getSymbol());
+    params.put(Constants.PARAM_LIMIT, body.getLimit());
 
     removeNullValues(params);
 
@@ -78,8 +78,8 @@ public class ApiEndpoint extends AbstractEndpoint implements AppOutputPort {
   public OrderResponseDto doCallJustOrder(final Object body, final HttpMethod method) {
     Map<String, Object> params = new HashMap<>();
 
-    params.put("recvWindow", Constants.RECV_WINDOW);
-    params.put("timestamp", System.currentTimeMillis());
+    params.put(Constants.PARAM_RECV_WINDOW, Constants.RECV_WINDOW);
+    params.put(Constants.PARAM_TIMESTAMP, System.currentTimeMillis());
 
     if (method.equals(HttpMethod.POST)) {
       MethodUtils.addPostOrderParams(params, (PostOrderRequestDto) body);
@@ -92,7 +92,7 @@ public class ApiEndpoint extends AbstractEndpoint implements AppOutputPort {
     removeNullValues(params);
     String queryString = buildQueryString(params);
     String signature = KeyManager.hmacSHA256(queryString, secretKey);
-    params.put("signature", signature);
+    params.put(Constants.PARAM_SIGNATURE, signature);
 
     try {
       return doCall(buildUrlWithQueryParams(basePath.concat(orderPath), params), method, addDefaultHeaders(), null, OrderResponseDto.class);
@@ -104,21 +104,20 @@ public class ApiEndpoint extends AbstractEndpoint implements AppOutputPort {
   @Override
   public List<OrdersResponseDto> doCallGetAllOrders(final AllOrderRequestDto body) {
     Map<String, Object> params = new HashMap<>();
-    params.put("symbol", body.getSymbol());
-    params.put("orderId", body.getOrderId());
-    params.put("startTime", body.getStartTime());
-    params.put("endTime", body.getEndTime());
-    params.put("limit", body.getLimit());
-    params.put("recvWindow", Constants.RECV_WINDOW);
-    params.put("timestamp", System.currentTimeMillis());
+    params.put(Constants.PARAM_SYMBOL, body.getSymbol());
+    params.put(Constants.PARAM_ORDER_ID, body.getOrderId());
+    params.put(Constants.PARAM_START_TIME, body.getStartTime());
+    params.put(Constants.PARAM_END_TIME, body.getEndTime());
+    params.put(Constants.PARAM_LIMIT, body.getLimit());
+    params.put(Constants.PARAM_RECV_WINDOW, Constants.RECV_WINDOW);
+    params.put(Constants.PARAM_TIMESTAMP, System.currentTimeMillis());
 
     removeNullValues(params);
 
     String queryString = buildQueryString(params);
 
     String signature = KeyManager.hmacSHA256(queryString, secretKey);
-    params.put("signature", signature);
-
+    params.put(Constants.PARAM_SIGNATURE, signature);
 
     return doCallTypeRef(buildUrlWithQueryParams(basePath.concat(allOrderPath), params), HttpMethod.GET, addDefaultHeaders(), null,
         new TypeReference<>() {});
@@ -127,16 +126,16 @@ public class ApiEndpoint extends AbstractEndpoint implements AppOutputPort {
   @Override
   public List<OrdersResponseDto> doCallOpenOrders(final OpenOrdersRequestDto body, final HttpMethod method) {
     Map<String, Object> params = new HashMap<>();
-    params.put("symbol", body.getSymbol());
-    params.put("recvWindow", Constants.RECV_WINDOW);
-    params.put("timestamp", System.currentTimeMillis());
+    params.put(Constants.PARAM_SYMBOL, body.getSymbol());
+    params.put(Constants.PARAM_RECV_WINDOW, Constants.RECV_WINDOW);
+    params.put(Constants.PARAM_TIMESTAMP, System.currentTimeMillis());
 
     removeNullValues(params);
 
     String queryString = buildQueryString(params);
 
     String signature = KeyManager.hmacSHA256(queryString, secretKey);
-    params.put("signature", signature);
+    params.put(Constants.PARAM_SIGNATURE, signature);
 
     try {
       return doCallTypeRef(buildUrlWithQueryParams(basePath.concat(openOrdersPath), params), method, addDefaultHeaders(), null,
@@ -149,16 +148,16 @@ public class ApiEndpoint extends AbstractEndpoint implements AppOutputPort {
   @Override
   public AccountResponseDto doCallGetAccount(final AccountRequestDto body) {
     Map<String, Object> params = new HashMap<>();
-    params.put("omitZeroBalances", body.getOmitZeroBalances());
-    params.put("recvWindow", Constants.RECV_WINDOW);
-    params.put("timestamp", System.currentTimeMillis());
+    params.put(Constants.PARAM_OMIT_ZERO_BALANCES, body.getOmitZeroBalances());
+    params.put(Constants.PARAM_RECV_WINDOW, Constants.RECV_WINDOW);
+    params.put(Constants.PARAM_TIMESTAMP, System.currentTimeMillis());
 
     removeNullValues(params);
 
     String queryString = buildQueryString(params);
 
     String signature = KeyManager.hmacSHA256(queryString, secretKey);
-    params.put("signature", signature);
+    params.put(Constants.PARAM_SIGNATURE, signature);
 
     return doCall(buildUrlWithQueryParams(basePath.concat(accountPath), params), HttpMethod.GET, addDefaultHeaders(), null, AccountResponseDto.class);
   }
@@ -166,22 +165,21 @@ public class ApiEndpoint extends AbstractEndpoint implements AppOutputPort {
   @Override
   public List<TradeResponseDto> doCallGetMyTrades(final TradeRequestDto body) {
     Map<String, Object> params = new HashMap<>();
-    params.put("symbol", body.getSymbol());
-    params.put("orderId", body.getOrderId());
-    params.put("startTime", body.getStartTime());
-    params.put("endTime", body.getEndTime());
-    params.put("fromId", body.getFromId());
-    params.put("limit", body.getLimit());
-    params.put("recvWindow", Constants.RECV_WINDOW);
-    params.put("timestamp", System.currentTimeMillis());
+    params.put(Constants.PARAM_SYMBOL, body.getSymbol());
+    params.put(Constants.PARAM_ORDER_ID, body.getOrderId());
+    params.put(Constants.PARAM_START_TIME, body.getStartTime());
+    params.put(Constants.PARAM_END_TIME, body.getEndTime());
+    params.put(Constants.PARAM_FROM_ID, body.getFromId());
+    params.put(Constants.PARAM_LIMIT, body.getLimit());
+    params.put(Constants.PARAM_RECV_WINDOW, Constants.RECV_WINDOW);
+    params.put(Constants.PARAM_TIMESTAMP, System.currentTimeMillis());
 
     removeNullValues(params);
 
     String queryString = buildQueryString(params);
 
     String signature = KeyManager.hmacSHA256(queryString, secretKey);
-    params.put("signature", signature);
-
+    params.put(Constants.PARAM_SIGNATURE, signature);
 
     return doCallTypeRef(buildUrlWithQueryParams(basePath.concat(myTradesPath), params), HttpMethod.GET, addDefaultHeaders(), null,
         new TypeReference<>() {});
