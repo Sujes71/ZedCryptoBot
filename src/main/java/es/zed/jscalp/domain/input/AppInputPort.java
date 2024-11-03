@@ -2,6 +2,7 @@ package es.zed.jscalp.domain.input;
 
 import es.zed.jscalp.domain.output.request.AccountRequestDto;
 import es.zed.jscalp.domain.output.request.AllOrderRequestDto;
+import es.zed.jscalp.domain.output.request.CandlesRequestDto;
 import es.zed.jscalp.domain.output.request.DepthRequestDto;
 import es.zed.jscalp.domain.output.request.OpenOrdersRequestDto;
 import es.zed.jscalp.domain.output.request.TradeRequestDto;
@@ -15,6 +16,8 @@ import java.util.List;
 import org.springframework.http.HttpMethod;
 
 public interface AppInputPort {
+
+  RespModel<List<List<String>>> getCandles(final CandlesRequestDto body);
 
   RespModel<DepthDto> getDepth(final DepthRequestDto body);
 

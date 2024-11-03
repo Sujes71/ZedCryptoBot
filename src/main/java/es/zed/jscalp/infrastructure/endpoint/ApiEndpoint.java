@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import es.zed.jscalp.domain.output.AppOutputPort;
 import es.zed.jscalp.domain.output.request.AccountRequestDto;
 import es.zed.jscalp.domain.output.request.AllOrderRequestDto;
+import es.zed.jscalp.domain.output.request.CandlesRequestDto;
 import es.zed.jscalp.domain.output.request.DeleteOrderRequestDto;
 import es.zed.jscalp.domain.output.request.DepthRequestDto;
 import es.zed.jscalp.domain.output.request.GetOrderRequestDto;
@@ -60,8 +61,25 @@ public class ApiEndpoint extends AbstractEndpoint implements AppOutputPort {
   @Value("${url.open.orders.path}")
   private String openOrdersPath;
 
+  @Value("${url.candles.path}")
+  private String candlesPath;
+
   public ApiEndpoint(RestTemplate restTemplate, CustomObjectMapper customObjectMapper) {
     super(restTemplate, customObjectMapper);
+  }
+
+  @Override
+  public List<List<String>> doCallGetCandles(CandlesRequestDto body) {
+    Map<String, Object> params = new HashMap<>();
+    params.put(Constants.PARAM_SYMBOL, body.getSymbol());
+    params.put(Constants.PARAM_LIMIT, body.getLimit());
+    params.put(Constants.PARAM_START_TIME, body.getStartTime());
+    params.put(Constants.PARAM_END_TIME, body.getEndTime());
+    params.put(Constants.PARAM_TIME_ZONE, body.getTimeZone());
+    params.put(Constants.PARAM_INTERVAL, body.getInterval());
+
+    return doCallTypeRef(buildUrlWithQueryParams(basePath.concat(candlesPath), params), HttpMethod.GET, null, null,
+        new TypeReference<>() {});
   }
 
   public DepthDto doCallGetDepth(final DepthRequestDto body) {

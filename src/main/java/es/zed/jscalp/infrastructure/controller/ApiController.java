@@ -3,6 +3,7 @@ package es.zed.jscalp.infrastructure.controller;
 import es.zed.jscalp.domain.input.AppInputPort;
 import es.zed.jscalp.domain.output.request.AccountRequestDto;
 import es.zed.jscalp.domain.output.request.AllOrderRequestDto;
+import es.zed.jscalp.domain.output.request.CandlesRequestDto;
 import es.zed.jscalp.domain.output.request.DeleteOrderRequestDto;
 import es.zed.jscalp.domain.output.request.DepthRequestDto;
 import es.zed.jscalp.domain.output.request.GetOrderRequestDto;
@@ -35,6 +36,11 @@ public class ApiController {
     this.appInputPort = appInputPort;
   }
 
+  @GetMapping(Constants.CANDLES_PATH)
+  public RespModel<List<List<String>>> getCandles(@RequestBody final CandlesRequestDto body) {
+    return this.appInputPort.getCandles(body);
+  }
+
   @GetMapping(Constants.ORDER_BOOK_PATH)
   public RespModel<DepthDto> getDepth(@RequestBody final DepthRequestDto body) {
     return this.appInputPort.getDepth(body);
@@ -55,6 +61,12 @@ public class ApiController {
     return this.appInputPort.justOrder(body, HttpMethod.DELETE);
   }
 
+  @GetMapping(Constants.ALL_ORDER_PATH)
+  public RespModel<List<OrdersResponseDto>> getAllOrder(@RequestBody final AllOrderRequestDto body) {
+    return this.appInputPort.getAllOrders(body);
+  }
+
+
   @GetMapping(Constants.OPEN_ORDERS_PATH)
   public RespModel<List<OrdersResponseDto>> getOpenOrders(@RequestBody final OpenOrdersRequestDto body) {
     return this.appInputPort.justOpenOrders(body, HttpMethod.GET);
@@ -63,11 +75,6 @@ public class ApiController {
   @DeleteMapping(Constants.OPEN_ORDERS_PATH)
   public RespModel<List<OrdersResponseDto>> deleteOpenOrders(@RequestBody final OpenOrdersRequestDto body) {
     return this.appInputPort.justOpenOrders(body, HttpMethod.DELETE);
-  }
-
-  @GetMapping(Constants.ALL_ORDER_PATH)
-  public RespModel<List<OrdersResponseDto>> getAllOrder(@RequestBody final AllOrderRequestDto body) {
-    return this.appInputPort.getAllOrders(body);
   }
 
   @GetMapping(Constants.ACCOUNT_PATH)

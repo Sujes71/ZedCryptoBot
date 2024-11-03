@@ -5,6 +5,7 @@ public class Constants {
   public static final String DEFAULT_MAPPING = "/api";
   public static final String TIME_PATH = "/time";
   public static final String ORDER_BOOK_PATH = "/depth";
+  public static final String CANDLES_PATH = "/candles";
   public static final String ALL_ORDER_PATH = "/allOrder";
   public static final String OPEN_ORDERS_PATH = "/openOrders";
   public static final String ORDER_PATH = "/order";
@@ -18,6 +19,8 @@ public class Constants {
   public static final String PARAM_ORDER_ID = "orderId";
   public static final String PARAM_START_TIME = "startTime";
   public static final String PARAM_END_TIME = "endTime";
+  public static final String PARAM_TIME_ZONE = "timeZone";
+  public static final String PARAM_INTERVAL = "interval";
   public static final String PARAM_RECV_WINDOW = "recvWindow";
   public static final String PARAM_TIMESTAMP = "timestamp";
   public static final String PARAM_SIGNATURE = "signature";

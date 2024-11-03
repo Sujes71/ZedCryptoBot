@@ -4,6 +4,7 @@ import es.zed.jscalp.domain.input.AppInputPort;
 import es.zed.jscalp.domain.output.AppOutputPort;
 import es.zed.jscalp.domain.output.request.AccountRequestDto;
 import es.zed.jscalp.domain.output.request.AllOrderRequestDto;
+import es.zed.jscalp.domain.output.request.CandlesRequestDto;
 import es.zed.jscalp.domain.output.request.DepthRequestDto;
 import es.zed.jscalp.domain.output.request.OpenOrdersRequestDto;
 import es.zed.jscalp.domain.output.request.TradeRequestDto;
@@ -25,6 +26,11 @@ public class ApiService implements AppInputPort {
 
   public ApiService(AppOutputPort appOutputPort) {
     this.appOutputPort = appOutputPort;
+  }
+
+  @Override
+  public RespModel<List<List<String>>> getCandles(CandlesRequestDto body) {
+    return MethodUtils.buildResponse(appOutputPort.doCallGetCandles(body));
   }
 
   @Override
