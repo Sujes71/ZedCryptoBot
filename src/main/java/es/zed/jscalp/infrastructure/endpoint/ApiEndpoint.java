@@ -112,6 +112,7 @@ public class ApiEndpoint extends AbstractEndpoint implements AppOutputPort {
     }
 
     removeNullValues(params);
+
     String queryString = buildQueryString(params);
     String signature = KeyManager.hmacSHA256(queryString, secretKey);
     params.put(Constants.PARAM_SIGNATURE, signature);
@@ -137,7 +138,6 @@ public class ApiEndpoint extends AbstractEndpoint implements AppOutputPort {
     removeNullValues(params);
 
     String queryString = buildQueryString(params);
-
     String signature = KeyManager.hmacSHA256(queryString, secretKey);
     params.put(Constants.PARAM_SIGNATURE, signature);
 
@@ -155,7 +155,6 @@ public class ApiEndpoint extends AbstractEndpoint implements AppOutputPort {
     removeNullValues(params);
 
     String queryString = buildQueryString(params);
-
     String signature = KeyManager.hmacSHA256(queryString, secretKey);
     params.put(Constants.PARAM_SIGNATURE, signature);
 
@@ -177,7 +176,6 @@ public class ApiEndpoint extends AbstractEndpoint implements AppOutputPort {
     removeNullValues(params);
 
     String queryString = buildQueryString(params);
-
     String signature = KeyManager.hmacSHA256(queryString, secretKey);
     params.put(Constants.PARAM_SIGNATURE, signature);
 
@@ -211,7 +209,6 @@ public class ApiEndpoint extends AbstractEndpoint implements AppOutputPort {
     removeNullValues(params);
 
     String queryString = buildQueryString(params);
-
     String signature = KeyManager.hmacSHA256(queryString, secretKey);
     params.put(Constants.PARAM_SIGNATURE, signature);
 
