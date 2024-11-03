@@ -8,11 +8,13 @@ import es.zed.jscalp.domain.output.request.CandlesRequestDto;
 import es.zed.jscalp.domain.output.request.DeleteOrderRequestDto;
 import es.zed.jscalp.domain.output.request.DepthRequestDto;
 import es.zed.jscalp.domain.output.request.GetOrderRequestDto;
+import es.zed.jscalp.domain.output.request.MyTradeRequestDto;
 import es.zed.jscalp.domain.output.request.OpenOrdersRequestDto;
 import es.zed.jscalp.domain.output.request.PostOrderRequestDto;
 import es.zed.jscalp.domain.output.request.TradeRequestDto;
 import es.zed.jscalp.domain.output.response.AccountResponseDto;
 import es.zed.jscalp.domain.output.response.DepthDto;
+import es.zed.jscalp.domain.output.response.MyTradeResponseDto;
 import es.zed.jscalp.domain.output.response.OrderResponseDto;
 import es.zed.jscalp.domain.output.response.OrdersResponseDto;
 import es.zed.jscalp.domain.output.response.TradeResponseDto;
@@ -40,9 +42,6 @@ public class ApiEndpoint extends AbstractEndpoint implements AppOutputPort {
   @Value("${url.base.test.path}")
   private String basePath;
 
-  @Value("${url.time.path}")
-  private String timePath;
-
   @Value("${url.depth.path}")
   private String depthPath;
 
@@ -64,6 +63,9 @@ public class ApiEndpoint extends AbstractEndpoint implements AppOutputPort {
   @Value("${url.candles.path}")
   private String candlesPath;
 
+  @Value("${url.trades.path}")
+  private String tradesPath;
+
   public ApiEndpoint(RestTemplate restTemplate, CustomObjectMapper customObjectMapper) {
     super(restTemplate, customObjectMapper);
   }
@@ -77,6 +79,8 @@ public class ApiEndpoint extends AbstractEndpoint implements AppOutputPort {
     params.put(Constants.PARAM_END_TIME, body.getEndTime());
     params.put(Constants.PARAM_TIME_ZONE, body.getTimeZone());
     params.put(Constants.PARAM_INTERVAL, body.getInterval());
+
+    removeNullValues(params);
 
     return doCallTypeRef(buildUrlWithQueryParams(basePath.concat(candlesPath), params), HttpMethod.GET, null, null,
         new TypeReference<>() {});
@@ -181,7 +185,19 @@ public class ApiEndpoint extends AbstractEndpoint implements AppOutputPort {
   }
 
   @Override
-  public List<TradeResponseDto> doCallGetMyTrades(final TradeRequestDto body) {
+  public List<TradeResponseDto> doCallGetTrades(TradeRequestDto body) {
+    Map<String, Object> params = new HashMap<>();
+    params.put(Constants.PARAM_SYMBOL, body.getSymbol());
+    params.put(Constants.PARAM_LIMIT, body.getLimit());
+
+    removeNullValues(params);
+
+    return doCallTypeRef(buildUrlWithQueryParams(basePath.concat(tradesPath), params), HttpMethod.GET, null, null,
+        new TypeReference<>() {});
+  }
+
+  @Override
+  public List<MyTradeResponseDto> doCallGetMyTrades(final MyTradeRequestDto body) {
     Map<String, Object> params = new HashMap<>();
     params.put(Constants.PARAM_SYMBOL, body.getSymbol());
     params.put(Constants.PARAM_ORDER_ID, body.getOrderId());

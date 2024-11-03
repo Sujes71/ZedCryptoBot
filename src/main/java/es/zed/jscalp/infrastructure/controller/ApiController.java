@@ -7,11 +7,13 @@ import es.zed.jscalp.domain.output.request.CandlesRequestDto;
 import es.zed.jscalp.domain.output.request.DeleteOrderRequestDto;
 import es.zed.jscalp.domain.output.request.DepthRequestDto;
 import es.zed.jscalp.domain.output.request.GetOrderRequestDto;
+import es.zed.jscalp.domain.output.request.MyTradeRequestDto;
 import es.zed.jscalp.domain.output.request.OpenOrdersRequestDto;
 import es.zed.jscalp.domain.output.request.PostOrderRequestDto;
 import es.zed.jscalp.domain.output.request.TradeRequestDto;
 import es.zed.jscalp.domain.output.response.AccountResponseDto;
 import es.zed.jscalp.domain.output.response.DepthDto;
+import es.zed.jscalp.domain.output.response.MyTradeResponseDto;
 import es.zed.jscalp.domain.output.response.OrderResponseDto;
 import es.zed.jscalp.domain.output.response.OrdersResponseDto;
 import es.zed.jscalp.domain.output.response.RespModel;
@@ -82,8 +84,13 @@ public class ApiController {
     return this.appInputPort.getAccount(body);
   }
 
+  @GetMapping(Constants.TRADES_PATH)
+  public RespModel<List<TradeResponseDto>> getTrades(@RequestBody final TradeRequestDto body) {
+    return this.appInputPort.getTrades(body);
+  }
+
   @GetMapping(Constants.MY_TRADES_PATH)
-  public RespModel<List<TradeResponseDto>> getMyTrades(@RequestBody final TradeRequestDto body) {
+  public RespModel<List<MyTradeResponseDto>> getMyTrades(@RequestBody final MyTradeRequestDto body) {
     return this.appInputPort.getMyTrades(body);
   }
 }

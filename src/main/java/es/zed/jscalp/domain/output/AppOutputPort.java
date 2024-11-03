@@ -4,10 +4,12 @@ import es.zed.jscalp.domain.output.request.AccountRequestDto;
 import es.zed.jscalp.domain.output.request.AllOrderRequestDto;
 import es.zed.jscalp.domain.output.request.CandlesRequestDto;
 import es.zed.jscalp.domain.output.request.DepthRequestDto;
+import es.zed.jscalp.domain.output.request.MyTradeRequestDto;
 import es.zed.jscalp.domain.output.request.OpenOrdersRequestDto;
 import es.zed.jscalp.domain.output.request.TradeRequestDto;
 import es.zed.jscalp.domain.output.response.AccountResponseDto;
 import es.zed.jscalp.domain.output.response.DepthDto;
+import es.zed.jscalp.domain.output.response.MyTradeResponseDto;
 import es.zed.jscalp.domain.output.response.OrderResponseDto;
 import es.zed.jscalp.domain.output.response.OrdersResponseDto;
 import es.zed.jscalp.domain.output.response.TradeResponseDto;
@@ -28,5 +30,7 @@ public interface AppOutputPort {
 
   AccountResponseDto doCallGetAccount(final AccountRequestDto body);
 
-  List<TradeResponseDto> doCallGetMyTrades(final TradeRequestDto body);
+  List<TradeResponseDto> doCallGetTrades(final TradeRequestDto body);
+
+  List<MyTradeResponseDto> doCallGetMyTrades(final MyTradeRequestDto body);
 }
